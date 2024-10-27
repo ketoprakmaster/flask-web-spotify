@@ -9,18 +9,17 @@
 }
 
 h1 {
-    max-width: 100%;
     font-weight: bold;
-    font-size: 2.5rem;
+    font-size: 1.7rem;
     color: #4CAF50;
     overflow-wrap: anywhere;
     margin-bottom: 20px;
 }
 
 .description {
-    font-size: 1rem;
+    font-size: .9rem;
     border-radius: 15px;
-    background-color: #fafafae6;
+    background-color: #eeeeee7b;
     color: #555; /* Softer color to not overpower the main title */
     margin-bottom: 20px;
     max-width: 80%;
@@ -42,7 +41,7 @@ h1 {
 
 input[type="range"] {
     accent-color: #4CAF50;
-    width: 100%;
+    width: 96%;
 }
 
 .slider-container {
