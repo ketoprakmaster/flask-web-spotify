@@ -1,0 +1,88 @@
+/* index.css */ 
+* {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.1rem;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 2.5rem;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+.description {
+    font-size: 1rem;
+    border-radius: 15px;
+    background-color: #fafafae6;
+    color: #555; /* Softer color to not overpower the main title */
+    margin-bottom: 20px;
+    max-width: 80%;
+    margin: auto;
+    padding: 10px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 800px;
+    padding: 20px;
+    border-radius: 15px;
+    border-color: #369239;
+    box-shadow: 0px 4px 40px grey;
+    margin: 50px auto;
+}
+
+input[type="range"] {
+    accent-color: #4CAF50;
+    width: 100%;
+}
+
+.slider-container {
+    max-width: 80%;
+    margin: auto;
+}
+
+#submit-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 20px;
+}
+
+#submit-btn:hover {
+    background-color: #369239;
+}
+
+#mood {
+    margin: 10px;
+    width: 80%;
+    border-width: 3px;
+    border-radius: 15px;
+    border-color: #4CAF50;
+    padding: 10px;
+}
+
+/* Results container with a 2-column grid layout */
+.results-container {
+    /* overflow: hidden; */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+    justify-items: center;
+}
+
+.results-container iframe {
+    border: none;
+    /* overflow: hidden; */
+    width: 100%; /* Ensures iframe takes full width within each grid cell */
+}

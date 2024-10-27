@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="icon" type="image/png" href="{{ url_for('static',filename='images/favicon.png') }}">
+    <title>Spotify Mood Recommender</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Songs Recommendation Based on Your Mood</h1>
+        <p class="description">
+            Select your current mood and adjust the energy and valence sliders to get personalized song recommendations. 
+            The "Energy" slider controls how lively the songs should be, while "Valence" adjusts for mood positivity. 
+            Click "Get Recommendations" to find songs that match your preferences and preview them right here!
+        </p>
+        <form id="main_form" class="slider-form">
+            <label for="mood">Select Mood:</label>
+            <br>
+            <select id="mood">
+                <option value="happy">Happy</option>
+                <option value="calm">Calm</option>
+                <option value="energetic">Energetic</option>
+                <option value="sad">Sad</option>
+            </select>
+
+            <div class="slider-container">
+                <label for="slider-energy">Energy: </label>
+                <input type="range" id="slider-energy" min="0" max="1" step="0.01" value="0.5">
+            </div>
+
+            <div class="slider-container">
+                <label for="slider-valence">Valence: </label>
+                <input type="range" id="slider-valence" min="0" max="1" step="0.01" value="0.5">
+            </div>
+
+            <input type="submit" value="Get Recommendations" id="submit-btn">
+        </form>
+
+        <div id="warn"></div>
+        <div id="results" class="results-container">
+        </div>
+    </div>
+
+    <script src="/static/js/index.js"></script>
+</body>
+</html>

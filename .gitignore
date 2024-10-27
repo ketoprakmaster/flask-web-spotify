@@ -1,0 +1,11 @@
+# ignore venv
+/venv
+
+# ignore environment variables
+/.env
+
+# ignore backup
+/backup
+
+# ignore logging
+*.log
