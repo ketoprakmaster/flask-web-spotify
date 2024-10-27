@@ -18,7 +18,7 @@ logging.basicConfig(
     ]
 )
 
-load_dotenv(dotenv_path='env')
+env_bool = load_dotenv(dotenv_path='env')
 
 token = str()
 expiration = datetime.now()
@@ -184,5 +184,7 @@ def recommend():
 
 
 if __name__ == "__main__":
-    
-    app.run(debug=True)
+    if not env_bool:
+        raise BaseException(".env variables does not exist\ncreate an enviroment variables named '.env' with 'CLIENT_ID' and 'CLIENT_SECRET' as variables")
+    else:
+        app.run(debug=True)
