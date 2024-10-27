@@ -18,7 +18,7 @@ logging.basicConfig(
     ]
 )
 
-env_bool = load_dotenv(dotenv_path='env')
+env_bool = load_dotenv(dotenv_path='.env')
 
 token = str()
 expiration = datetime.now()
