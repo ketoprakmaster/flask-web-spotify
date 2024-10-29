@@ -9,3 +9,6 @@
 
 # ignore logging
 /*.log
+
+# ignore cache
+__pycache__
