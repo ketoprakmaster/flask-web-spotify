@@ -3,45 +3,42 @@
     font-family: "Poppins", sans-serif;
     font-size: 1.1rem;
     text-align: center;
-    margin: 0;
-    padding: 0;
+    line-height: 1.1;
+    margin-bottom: 20px;
     box-sizing: border-box;
+    overflow-wrap: anywhere;
 }
+
 
 h1 {
     font-weight: bold;
-    font-size: 1.7rem;
+    font-size: 2rem;
     color: #4CAF50;
-    overflow-wrap: anywhere;
-    margin-bottom: 20px;
 }
 
 .description {
-    font-size: .9rem;
-    border-radius: 15px;
-    background-color: #eeeeee7b;
-    color: #555; /* Softer color to not overpower the main title */
-    margin-bottom: 20px;
+    margin: 25px auto;
     max-width: 80%;
-    margin: auto;
     padding: 10px;
-    margin-bottom: 15px;
-    line-height: 1.5;
+    font-size: 1rem;
+    border-radius: 15px;
+    background-color: #8c8c8c20;
+    color: #555; 
 }
 
 .container {
-    width: 80%;
-    max-width: 800px;
-    padding: 20px;
+    margin: 25px auto;
+    max-width: 700px;
+    width: 90%;
+    padding: 25px;
     border-radius: 15px;
-    border-color: #369239;
-    box-shadow: 0px 4px 40px grey;
-    margin: 50px auto;
+    /* background-image: linear-gradient(rgb(204, 237, 222),rgb(210, 221, 205)); */
+    box-shadow: 0px 4px 50px grey;
 }
 
 input[type="range"] {
     accent-color: #4CAF50;
-    width: 96%;
+    width: 100%;
 }
 
 .slider-container {
@@ -50,14 +47,14 @@ input[type="range"] {
 }
 
 #submit-btn {
-    margin-top: 20px;
+    max-width: 100%;
     padding: 10px 20px;
     background-color: #4CAF50;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 8px;
-    font-size: 20px;
+    font-size: 1.3rem;
 }
 
 #submit-btn:hover {
@@ -75,7 +72,6 @@ input[type="range"] {
 
 /* Results container with a 2-column grid layout */
 .results-container {
-    /* overflow: hidden; */
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 15px;
@@ -85,6 +81,5 @@ input[type="range"] {
 
 .results-container iframe {
     border: none;
-    /* overflow: hidden; */
     width: 100%; /* Ensures iframe takes full width within each grid cell */
 }
