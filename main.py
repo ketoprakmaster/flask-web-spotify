@@ -14,13 +14,16 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler("logging.log",mode='w')
+        logging.FileHandler("logging.log",mode='a')
     ]
 )
 
-if not load_dotenv(dotenv_path='.env'):
-    raise BaseException(".env variables does not exist\ncreate an enviroment variables named '.env' with 'CLIENT_ID' and 'CLIENT_SECRET' as variables")
+class missing_enviroment_variable(Exception):
+    pass
 
+if not load_dotenv(dotenv_path='.env'):
+    logging.error(".env variables does not exist\ncreate an enviroment variables named '.env' with 'CLIENT_ID' and 'CLIENT_SECRET' as variables")
+    
 token = str()
 expiration = datetime.now()
 app = Flask(__name__,template_folder='templates')
@@ -38,7 +41,7 @@ def get_token_expiration_time(expires_in_seconds: int) -> datetime:
     current_time = datetime.now()
     
     # Add the expires_in seconds to the current time
-    expiration_time = current_time + timedelta(seconds=expires_in_seconds)
+    expiration_time = current_time + timedelta(seconds=expires_in_seconds - 60) 
     
     return expiration_time
 
@@ -51,6 +54,9 @@ def manage_token() -> str:
 
     global token
     global expiration
+    
+    if not client_id or not client_secret:
+        raise missing_enviroment_variable
 
     if expiration >= datetime.now() and token:
         logging.info(f"Using existing token. Token expiration: {expiration}")
@@ -81,7 +87,7 @@ def create_token(client_id: str, client_secret: str) -> tuple[str, datetime]:
     }
     data = {"grant_type": "client_credentials"}
 
-    logging.debug("Requesting new token from Spotify API.")
+    logging.info("Requesting new token from Spotify API.")
 
     # Make the POST request to get the token
     try:
@@ -106,7 +112,6 @@ def get_spotify_songs(mood_option,audio_features: dict = {}, limit=10) -> list:
     if not audio_features:
         raise ValueError("no attributes were given")
 
-    logging.debug(f"Fetching songs with audio features: {audio_features}")
     sp = spotipy.Spotify(auth=manage_token())
     
     mood_to_genre = {
@@ -117,7 +122,9 @@ def get_spotify_songs(mood_option,audio_features: dict = {}, limit=10) -> list:
     }
 
     seed_genres = mood_to_genre.get(mood_option,['pop','rock'])
+    
     logging.info(f"seed genres selected : {seed_genres}")
+    logging.info(f"Fetching songs with audio features: {audio_features}")
     
     try:
         recommendations = sp.recommendations(
@@ -137,7 +144,7 @@ def get_spotify_songs(mood_option,audio_features: dict = {}, limit=10) -> list:
         for track in recommendations['tracks']
     ]
 
-    logging.info(f"Retrieved {len(tracks)} tracks.")
+    logging.info(f"Successfully retrieved {len(tracks)} tracks.")
     return tracks    
 
 
@@ -166,18 +173,19 @@ def recommend():
         # Filter out only the audio features that have valid values
         audio_features = {key: value for key, value in data.items() if value is not None}
 
-        logging.debug(f"Received mood options: {mood_select}")
-        logging.debug(f"Received audio features: {audio_features}")
-
         # Fetch song recommendations from Spotify using mood and audio features
         recommended_songs = get_spotify_songs(mood_option=mood_select, audio_features=audio_features)
 
-        logging.info(f"Successfully retrieved {len(recommended_songs)} song recommendations.")
-        return jsonify({'songs': recommended_songs})
+        return jsonify({'songs': recommended_songs}), 200
 
     except ValueError as ve:
         logging.error(f"ValueError: {ve}")
         return jsonify({'error': str(ve)}), 400  # Bad request
+    
+    except missing_enviroment_variable:
+        logging.error("missing environment variables. cannot fetch songs recommendation")
+        return jsonify({'internal server error': 'failed to authenticate needed to fetch songs'}), 503
+    
     except Exception as e:
         logging.error(f"Error processing recommendation request: {e}")
         return jsonify({'error': 'An error occurred while processing the request.'}), 500
