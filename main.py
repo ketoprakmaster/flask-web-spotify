@@ -41,7 +41,7 @@ def get_token_expiration_time(expires_in_seconds: int) -> datetime:
     current_time = datetime.now()
     
     # Add the expires_in seconds to the current time
-    expiration_time = current_time + timedelta(seconds=expires_in_seconds - 60) 
+    expiration_time = current_time + timedelta(seconds=expires_in_seconds) 
     
     return expiration_time
 
@@ -97,7 +97,7 @@ def create_token(client_id: str, client_secret: str) -> tuple[str, datetime]:
         # Parse the response to get the token
         json_result = response.json()
         access_token = json_result.get("access_token")
-        expires_in = get_token_expiration_time(json_result.get("expires_in") - 100)
+        expires_in = get_token_expiration_time(json_result.get("expires_in") - 120)
         
         logging.info("Token successfully created.")
         return access_token, expires_in
