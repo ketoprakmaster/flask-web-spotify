@@ -1,5 +1,6 @@
 # ignore venv
 /venv
+/.venv
 
 # ignore environment variables
 /.env
