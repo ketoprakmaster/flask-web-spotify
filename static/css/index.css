@@ -7,13 +7,16 @@
     margin-bottom: 20px;
     box-sizing: border-box;
     overflow-wrap: anywhere;
+    background-color: #443f3f;
+    color: white;
 }
 
 
 h1 {
     font-weight: bold;
     font-size: 2rem;
-    color: #4CAF50;
+    color: #1bf122;
+
 }
 
 .description {
@@ -23,7 +26,6 @@ h1 {
     font-size: 1rem;
     border-radius: 15px;
     background-color: #8c8c8c20;
-    color: #555; 
 }
 
 .container {
@@ -33,23 +35,23 @@ h1 {
     padding: 25px;
     border-radius: 15px;
     /* background-image: linear-gradient(rgb(204, 237, 222),rgb(210, 221, 205)); */
-    box-shadow: 0px 4px 50px grey;
+    box-shadow: 0px 4px 50px black;
 }
 
 input[type="range"] {
-    accent-color: #4CAF50;
     width: 100%;
 }
 
 .slider-container {
     max-width: 80%;
     margin: auto;
+    accent-color: #1bf122;
 }
 
 #submit-btn {
     max-width: 100%;
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #8c8c8c20;
     color: white;
     border: none;
     cursor: pointer;
@@ -66,7 +68,6 @@ input[type="range"] {
     width: 80%;
     border-width: 3px;
     border-radius: 15px;
-    border-color: #4CAF50;
     padding: 10px;
 }
 
