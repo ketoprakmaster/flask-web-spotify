@@ -1,5 +1,6 @@
 import spotipy
 import logging
+import os
 
 from spotipy.oauth2 import SpotifyClientCredentials
 from spotipy.oauth2 import SpotifyOauthError
@@ -35,7 +36,7 @@ def initSpotifyClient():
         logging.error(f"Error initializing Spotify client: {e}")
         raise
 
-def getSpotifySongs(spotify : spotipy , seed_genres, audio_features, limit=10,):
+def getSpotifySongs(spotify : spotipy.Spotify , seed_genres, audio_features, limit=10,):
     "Fetch song recommendations from Spotify using seed_genres and audio features"
     try:
         recommendations = spotify.recommendations(
@@ -57,7 +58,7 @@ def getSpotifySongs(spotify : spotipy , seed_genres, audio_features, limit=10,):
 
 def getAudioFeatures(req) -> dict:
     "return a dict contains the audio features from a json request."
-    data = validate_request(req)
+    data = validateRequest(req)
     data.pop('mood',None)
     audio_features = {key: value for key, value in data.items() if value is not None}
     if not audio_features:
@@ -68,7 +69,7 @@ def getAudioFeatures(req) -> dict:
 
 def getSeedGenres(req) -> list:
     "return a list of seed genres based on mood selection from a json request"
-    data = validate_request(req)
+    data = validateRequest(req)
     mood_options = data.pop('mood',None)
     if not mood_options:
         logging.warning("no inputted mood selection were given. proceed to a default ['pop','rock'])")
@@ -76,7 +77,7 @@ def getSeedGenres(req) -> list:
     logging.info(f"selected seed genres : {seed_genres}")
     return seed_genres
 
-def validate_request(req):
+def validateRequest(req):
     "validate a request and return a data json"
     if not req.is_json:
         logging.error("Unsupported Media Type: Expected JSON data.")
@@ -86,6 +87,9 @@ def validate_request(req):
 # load dot environment
 if not load_dotenv(dotenv_path='.env'):
     logging.error(".env variables does not exist\ncreate an enviroment variables named '.env' with 'CLIENT_ID' and 'CLIENT_SECRET' as variables")
+    exit(1)
+if not os.getenv("SPOTIPY_CLIENT_ID") or not os.getenv("SPOTIPY_CLIENT_SECRET"):
+    logging.error("Missing SPOTIPY_CLIENT_ID or SPOTIPY_CLIENT_SECRET environment variables.")
     exit(1)
 
 # initialize a flask app and spotify api client
